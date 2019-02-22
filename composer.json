@@ -1,0 +1,19 @@
+{
+    "name": "lyignore\/discern",
+    "description": "A service that identifies the key information of the invoice",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "liuyang",
+            "email": "1585296643@qq.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lyignore\\Discern\\": "src"
+        }
+    }
+}
