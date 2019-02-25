@@ -1,6 +1,6 @@
 <?php
 namespace Lyignore\Discern\Contracts;
 
-interface InvoiceInterface{
+interface DiscernInterface{
 
 }

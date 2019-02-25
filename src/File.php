@@ -26,10 +26,13 @@ class File implements FileInterface{
         }else{
             if(file_exists($path)){
                 $this->path = $path;
+                $this->content = file_get_contents($path);
             }elseif(file_exists(__DIR__.'/'.$path)){
                 $this->path = __DIR__.'/'.$path;
+                $this->content = file_get_contents($path);
             }elseif(file_exists(getcwd().'/'.$path)){
                 $this->path = getcwd().'/'.$path;
+                $this->content = file_get_contents($path);
             }else{
                 throw new FileException('There is a problem with the picture address');
             }
@@ -94,8 +97,11 @@ class File implements FileInterface{
     }
 
     public function putFile(){
-        $filepath = '../upload/'.time().mt_rand(1000, 9999);
-        file_put_contents($filepath, $this->content);
+        $filepath = dirname(__DIR__).'/uploads/'.time().mt_rand(1000, 9999);
+        $myfile = fopen($filepath, "w") or die("Unable to open file!");
+        fwrite($myfile, $this->content);
+        fclose($myfile);
+        //file_put_contents($filepath, $this->content);
         $this->imgPath = realpath($filepath);
         return $this->imgPath;
     }
