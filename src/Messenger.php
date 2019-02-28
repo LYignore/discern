@@ -124,11 +124,7 @@ class Messenger{
      * 判断当前主域名
      */
     protected function getBaseUri(){
-        if($this->config->get('host_url.online')){
-            $this->base_uri = $this->config->get('host_url.lts_url');
-        }else{
-            $this->base_uri = $this->config->get('host_url.beta_url');
-        }
+        $this->base_uri = $this->config->get('host_url.online')?$this->config->get('host_url.lts_url'):$this->config->get('host_url.beta_url');
         return $this->base_uri;
     }
 

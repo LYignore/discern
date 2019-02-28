@@ -10,7 +10,8 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.3",
-        "nesbot/carbon": "^2.13"
+        "nesbot/carbon": "1.*",
+        "phpoffice/phpspreadsheet": "^1.6"
     },
     "autoload": {
         "psr-4": {

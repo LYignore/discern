@@ -2,9 +2,14 @@
 namespace Lyignore\Discern;
 
 use Carbon\Carbon;
+use Lyignore\Discern\Exceptions\MessengerException;
 use Lyignore\Discern\Support\Config;
 
-class Discern implements \Lyignore\Discern\Contracts\DiscernInterface{
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+class Discern {
     private $config;
 
     private $messager;
@@ -68,8 +73,60 @@ class Discern implements \Lyignore\Discern\Contracts\DiscernInterface{
     /*
      * 批量导出发票信息
      */
-    public function exportInovices(){
+    public function exportInovices($start_time, $end_time, $type, $excelname='demo'){
+        $result = $this->getList($start_time, $end_time, $type);
+        if($result['return_code'] == 200){
+            $content = $result['data']['list']??[];
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
 
+            $keys = [
+                'getof_time',
+                'distance',
+                'boarding_time',
+                'other',
+                'unit_price',
+                'tel',
+                'certificate_no',
+                'taxi_no',
+                'issued_date',
+                'total',
+                'waiting_time',
+                'invoice_code',
+                'invoice_number',
+                'duplication_checking',
+                'invoice_type',
+                'status',
+                'invoice_id',
+                'upload_time',
+                'app_id',
+                'image_path',
+                'image_source',
+                'image_status'
+            ];
+            $AZ = range('A', 'Z');
+            foreach ($keys as $key => $value){
+                $sheet->getColumnDimension($AZ[$key])->setAutoSize(true);
+                $sheet->setCellValue($AZ[$key].'1', $value);
+            };
+
+            foreach($content as $k=>$invoices){
+                $i = 0;
+                foreach($invoices as $invoice){
+                    $sheet->setCellValue($AZ[$i].($k+2), $invoice);
+                    $i++;
+                }
+            }
+
+            //$objWrite = IOFactory::createWriter($spreadsheet,'Xls');
+            //$objWrite->save('php://output');
+
+            //$objWrite->save('./demo.xlsx');
+            $writer = new Xlsx($spreadsheet);
+            return $writer->save($excelname.'.xlsx');
+        }else{
+            return new MessengerException('The network impassability');
+        }
     }
 
     /*

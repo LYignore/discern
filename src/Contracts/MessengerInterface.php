@@ -1,6 +1,6 @@
 <?php
 namespace Lyignore\Discern\Contracts;
 
-interface DiscernInterface{
+interface MessengerInterface{
 
 }
