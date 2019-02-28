@@ -40,7 +40,7 @@ $config = [
 
 $invoice = new Invoice($config);
 //上传图片
-$img = $invoice->uploadInvoice('./web/static/imgs/bg.jpg');
+$img = $invoice->uploadInvoice('https://download.aikaka.com.cn/f0328e346f521339086089b73141839f', 'TAXI');
 var_dump($img);
 
 //获取图片详情
