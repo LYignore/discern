@@ -24,7 +24,7 @@ $config = [
 
     // 认证发送配置
     'default' => [
-        'appid'  => '99rR7E9LtiFOdWwb8NE5UrrovtP8uJMq',
+        'appid'  => 'dmeUqS4+M3aH1A5u+v1eogB3d69PwTKN',
         'secret' => 'LoDPHC83A5tRlcn/wnlwmEgEnSuBeC4U'
     ],
     // 主域名配置
@@ -40,16 +40,20 @@ $config = [
 
 $invoice = new Invoice($config);
 //上传图片
-$imgId = $invoice->uploadInvoice('./web/static/imgs/bg.jpg');
+$img = $invoice->uploadInvoice('./web/static/imgs/bg.jpg');
+var_dump($img);
 
 //获取图片详情
+$imgId = $img['data']['md5'];
 $imgInfo = $invoice->getInvoice($imgId);
+var_dump($imgInfo);
 
 //按时间获取上传的发票列表
-$imgList = $invoice->getList('1550703352', '1550733352');
+$imgList = $invoice->getList('1550703352', '1550733352', 'taxi');
+var_dump($imgList);
 
 //批量导出发票信息
-$exportInvoices = $invoice->exportInovices('1550703352', '1550733352');
+$invoiceExcel = $invoice->exportInovices('1550703352', '1550733352', 'taxi', 'excelname');
 ```
 ## License
 
